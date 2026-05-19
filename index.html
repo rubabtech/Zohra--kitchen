@@ -542,41 +542,93 @@ function closeModal() {
     document.getElementById('myModal').style.display = 'none';
 }
 
-var currentRating = 0;
+
+   var currentRating = 0;
+var SHEET_API = 'https://sheetdb.io/api/v1/22xsfxfxzb34n';
 
 function setRating(rating) {
     currentRating = rating;
     var stars = document.querySelectorAll('.star-select span');
     stars.forEach(function(star, index) {
-        if (index < rating) {
-            star.classList.add('active');
-        } else {
-            star.classList.remove('active');
-        }
+        star.classList.toggle('active', index < rating);
     });
 }
 
+// Reviews load karo page open hone par
+function loadReviews() {
+    fetch(SHEET_API)
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            var grid = document.getElementById('reviews-grid');
+            grid.innerHTML = '';
+            data.forEach(function(review) {
+                var card = document.createElement('div');
+                card.classList.add('review-card');
+                card.setAttribute('data-id', review.ID);
+                card.innerHTML =
+                    '<p class="stars">' + review.Stars + '</p>' +
+                    '<p class="review-text">"' + review.Review + '"</p>' +
+                    '<p class="reviewer">— ' + review.Name + ', Lahore</p>' +
+                    '<button class="delete-btn" onclick="deleteReview(\'' + review.ID + '\', this)">🗑️ Remove</button>';
+                grid.appendChild(card);
+            });
+        });
+}
+
+// Review submit karo
 function submitReview() {
-    var name = document.getElementById('reviewer-name').value;
-    var text = document.getElementById('review-text').value;
-    if (name === '' || text === '' || currentRating === 0) {
-        alert('Please naam, stars aur review likho!');
+    var name = document.getElementById('reviewer-name').value.trim();
+    var text = document.getElementById('review-text').value.trim();
+    if (!name || !text || currentRating === 0) {
+        alert('Apna naam, stars aur review zaroor likhain!');
         return;
     }
-    var stars = '';
-    for (var i = 0; i < currentRating; i++) { stars += '★'; }
-    var card = document.createElement('div');
-    card.classList.add('review-card');
-    card.innerHTML =
-        '<p class="stars">' + stars + '</p>' +
-        '<p class="review-text">"' + text + '"</p>' +
-        '<p class="reviewer">— ' + name + ', Lahore</p>';
-    document.getElementById('reviews-grid').appendChild(card);
-    document.getElementById('reviewer-name').value = '';
-    document.getElementById('review-text').value = '';
-    currentRating = 0;
-    setRating(0);
-    
+    var stars = '★'.repeat(currentRating);
+    var id = Date.now().toString();
+
+    fetch(SHEET_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            data: [{
+                ID: id,
+                Name: name,
+                Stars: stars,
+                Review: text,
+                Date: new Date().toLocaleDateString()
+            }]
+        })
+    })
+    .then(function() {
+        document.getElementById('reviewer-name').value = '';
+        document.getElementById('review-text').value = '';
+        currentRating = 0;
+        setRating(0);
+        loadReviews();
+    });
+}
+
+// Review delete karo
+function deleteReview(id, btn) {
+    var password = prompt('Admin password daalo:');
+    if (password !== 'zohra2025') {
+        alert('Galat password!');
+        return;
+    }
+    fetch(SHEET_API + '/ID/' + id, {
+        method: 'DELETE'
+    })
+    .then(function() {
+        loadReviews();
+    });
+}
+
+// Page load hone par reviews load hon
+window.onload = function() {
+    loadReviews();
+};
+
+
 
     window.addEventListener('scroll', function() 
 { 
@@ -619,7 +671,7 @@ function submitReview() {
 });
 
 
-}
+
 
 
 
