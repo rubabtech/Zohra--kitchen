@@ -806,61 +806,7 @@ footer {
 
 
 
-  /* EMAIL CONTACT FORM */
 
-.email-contact{
-    padding: 80px 20px;
-    text-align: center;
-    background: #fff5f7;
-}
-
-.email-contact h2{
-    font-size: 40px;
-    margin-bottom: 10px;
-    color: #d63384;
-}
-
-.email-contact p{
-    margin-bottom: 30px;
-    color: #555;
-}
-
-.email-contact form{
-    max-width: 600px;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.email-contact input,
-.email-contact textarea{
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    font-size: 16px;
-    outline: none;
-}
-
-.email-contact input:focus,
-.email-contact textarea:focus{
-    border-color: #d63384;
-}
-
-.email-contact button{
-    background: #d63384;
-    color: white;
-    padding: 15px;
-    border: none;
-    border-radius: 12px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.email-contact button:hover{
-    background: #b0256b;
-}
 
 
 
