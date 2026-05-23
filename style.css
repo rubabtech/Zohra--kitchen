@@ -101,12 +101,11 @@ nav a:hover {
 }
 
 .hero-image img {
-    width: 100%;
-    max-width: 450px;
-    height: 450px;
+    width: 420px;
+    height: 420px;
     object-fit: cover;
-    object-position: center 100%;
-    border-radius: 30px;
+    object-position: center 130%;
+    border-radius: 20px;
     box-shadow: 0 30px 60px rgba(0,0,0,0.3);
     border: 4px solid rgba(201,166,107,0.4);
 }
@@ -1277,4 +1276,155 @@ footer {
 
 .delete-btn:hover {
     background: #ffcccc;
+}
+
+/* DISCOUNT BADGE */
+
+    
+    .discount-strip {
+    background-color: #C9A66B;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    width: 100%;
+    margin-top: -5px;
+}
+
+
+/* NEW MODAL */
+.modal-content-new {
+    background: white;
+    margin: 3% auto;
+    width: 80%;
+    max-width: 900px;
+    border-radius: 20px;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #8A7560;
+    background: #FFF8F2;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.modal-left {
+    flex: 1;
+    background: #FFF8F2;
+    padding: 30px;
+    text-align: center;
+}
+
+.modal-left img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+.modal-left h3 {
+    font-size: 20px;
+    color: #3D2B1F;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 8px;
+}
+
+.modal-left p {
+    font-size: 18px;
+    color: #C9A66B;
+    font-weight: 700;
+}
+
+.modal-right {
+    flex: 1;
+    padding: 35px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal-right h3 {
+    font-size: 22px;
+    color: #3D2B1F;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 5px;
+}
+
+.modal-right label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #6B4F4F;
+    margin-bottom: -6px;
+}
+
+.modal-right input,
+.modal-right select {
+    padding: 11px 14px;
+    border: 1.5px solid #E8D3C2;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    color: #3D2B1F;
+    background: #FFF8F2;
+    outline: none;
+    transition: border 0.3s;
+}
+
+.modal-right input:focus,
+.modal-right select:focus {
+    border-color: #C9A66B;
+}
+
+.modal-order-btn {
+    background: #25D366;
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s;
+    margin-top: 8px;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+}
+
+.modal-order-btn:hover {
+    background: #128C7E;
+    transform: translateY(-2px);
+}
+
+/* Mobile Modal */
+@media (max-width: 768px) {
+    .modal-content-new {
+        flex-direction: column;
+        width: 95%;
+        margin: 5% auto;
+    }
+
+    .modal-left img {
+        height: 220px;
+    }
 }

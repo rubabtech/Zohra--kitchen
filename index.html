@@ -42,15 +42,23 @@
             <h1>Customized Cakes<br><em>Crafted With Love</em></h1>
             <p>Made-to-order cakes for birthdays, weddings, Nikkah & every special occasion — baked fresh with 100% real cream.</p>
             <div class="hero-buttons">
-                <a href="https://wa.me/923244316234" target="_blank" class="btn-primary">Start Your Order</a>
+                <a href="https://wa.me/923244316234?text=Hi!%20I%20want%20to%20order%20a%20custom%20cake%20from%20Zohra%20Kitchen%20%F0%9F%8E%82" target="_blank" class="btn-primary">Start Your Order</a>
                 <a href="#menu" class="btn-outline">View Cake Designs</a>
             </div>
         </div>
+
         <div class="hero-image">
             <img src="IMAGES/cake2 (14).jpeg" alt="Zohra Kitchen Special Cake">
         </div>
     </div>
+
+    <div class="discount-strip">
+        🎉 GET 10% DISCOUNT on your first order! — WhatsApp us to claim!
+    </div>
+
 </section>
+    
+
 
 
 
@@ -377,30 +385,16 @@
 <section class="map-section">
   <h2>Our Location 📍</h2>
 
-  <iframe
-    src="https://maps.google.com/maps?q=Lahore&t=&z=13&ie=UTF8&iwloc=&output=embed"
+ <iframe
+    src="https://maps.google.com/maps?q=Garhi+Shahu+Lahore&t=&z=15&ie=UTF8&iwloc=&output=embed"
     allowfullscreen=""
     loading="lazy">
-  </iframe>
+</iframe>
+
 </section> 
 
 
-<!-- CONTACT FORM SECTION -->
-<section class="email-contact">
-    <h2>Send Us a Message 📧</h2>
-    <p>Feel free to contact us for custom orders!</p>
 
-    <form action="https://formsubmit.co/zohrakitchen2025@gmail.com" method="POST">
-
-        <input type="text" name="name" placeholder="Your Name" required>
-
-        <input type="email" name="email" placeholder="Your Email" required>
-
-        <textarea name="message" rows="5" placeholder="Write your message..."></textarea>
-
-        <button type="submit">Send Message</button>
-
-    </form>
 </section>
 
 
@@ -421,12 +415,7 @@
 
 
 
-    <div class="contact-info">
-        <p>Location: Lahore, Pakistan</p>
-        <p>Delivery: All over Lahore</p>
-        <p>Order 2 days in advance</p>
-    </div>
-
+ 
 </section>
 
 <!-- FOOTER -->
@@ -473,22 +462,56 @@
      
 
 
-
-
-
+ 
     <!-- MODAL -->
-    <div class="modal" id="myModal">
-        <div class="modal-content">
-            <span onclick="closeModal()">X</span>
+<div class="modal" id="myModal">
+    <div class="modal-content-new">
+        <span class="modal-close" onclick="closeModal()">✕</span>
+        
+        <div class="modal-left">
             <img id="modal-img" src="" alt="">
             <h3 id="modal-name"></h3>
-            <p id="modal-weight"></p>
             <p id="modal-price"></p>
-            <p id="modal-cream"></p>
-            <p id="modal-ingredients"></p>
+        </div>
+
+        <div class="modal-right">
+            <h3>Order Details</h3>
+
+            <label>Delivery Date *</label>
+            <input type="date" id="modal-date">
+
+            <label>Delivery Time *</label>
+            <select id="modal-time">
+                <option>12 PM</option>
+                <option>2 PM</option>
+                <option>4 PM</option>
+                <option>6 PM</option>
+                <option>8 PM</option>
+            </select>
+
+            <label>Flavour *</label>
+            <select id="modal-flavour"  onchange="updatePrice()" > 
+                <option>Chocolate Fudge</option>
+                <option>Vanilla</option>
+                <option>Red Velvet</option>
+                <option>Nutella</option>
+                option>Chocolate Chip</option>
+                <option>Pineapple Cakes</option>
+                <option>Caramel</option>
+            </select>
+
+            <label>Message on Cake</label>
+            <input type="text" id="modal-message" placeholder="e.g. Happy Birthday Ali!">
+
+            <label>Your Phone Number *</label>
+            <input type="tel" id="modal-phone" placeholder="e.g. 0300-1234567">
+
+            <button onclick="orderOnWhatsApp()" class="modal-order-btn">
+                💬 Order on WhatsApp
+            </button>
         </div>
     </div>
-
+</div>
 
 
 
@@ -518,19 +541,73 @@ var cakes = {
     'muffin': { img: 'IMAGES/muffin.jpeg', name: 'Chocolate Chip Muffins', weight: '6 pieces', price: 'Rs. 280 each' },
 }
 
+var currentCake = '';
+
 function openModal(id) {
     var cake = cakes[id];
-    if (!cake) { return; }
+    if (!cake) return;
+    currentCake = cake;
     document.getElementById('modal-img').src = cake.img;
     document.getElementById('modal-name').innerHTML = cake.name;
-    document.getElementById('modal-weight').innerHTML = 'Weight: ' + cake.weight;
-    document.getElementById('modal-price').innerHTML = 'Price: ' + cake.price;
-    
+    document.getElementById('modal-price').innerHTML = '💰 ' + cake.price;
     document.getElementById('myModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
     document.getElementById('myModal').style.display = 'none';
+    document.body.style.overflow = '';
+    document.getElementById('modal-date').value = '';
+    document.getElementById('modal-phone').value = '';
+    document.getElementById('modal-message').value = '';
+}
+
+function updatePrice() {
+    var flavour = document.getElementById('modal-flavour').value;
+    var basePrice = parseInt(currentCake.price.replace(/[^0-9]/g, ''));
+    var finalPrice = basePrice;
+
+    if (flavour === 'Vanilla') finalPrice = basePrice - 100;
+    if (flavour === 'Chocolate Fudge') finalPrice = basePrice + 200;
+    if (flavour === 'Red Velvet') finalPrice = basePrice - 50;
+
+    document.getElementById('modal-price').innerHTML = '💰 Rs. ' + finalPrice;
+}
+
+
+
+function orderOnWhatsApp() {
+    var name = currentCake.name;
+    var price = currentCake.price;
+    var date = document.getElementById('modal-date').value;
+    var time = document.getElementById('modal-time').value;
+   var flavour = document.getElementById('modal-flavour').value;
+var basePrice = parseInt(currentCake.price.replace(/[^0-9]/g, ''));
+var finalPrice = basePrice;
+
+if (flavour === 'Vanilla') finalPrice = basePrice - 100;
+if (flavour === 'Chocolate Fudge') finalPrice = basePrice + 200;
+if (flavour === 'Red Velvet') finalPrice = basePrice - 50;
+
+    var message = document.getElementById('modal-message').value;
+    var phone = document.getElementById('modal-phone').value;
+
+    if (!date || !phone) {
+        alert('Please fill Delivery Date and Phone Number!');
+        return;
+    }
+
+    var text = 
+        'Hi! I want to order from Zohra Kitchen 🎂' +
+        '%0A%0A*Cake:* ' + name +
+        '%0A*Price:* Rs. ' + finalPrice +
+        '%0A*Delivery Date:* ' + date +
+        '%0A*Delivery Time:* ' + time +
+        '%0A*Flavour:* ' + flavour +
+        '%0A*Message on Cake:* ' + (message || 'None') +
+        '%0A*My Phone:* ' + phone;
+
+    window.open('https://wa.me/923244316234?text=' + text, '_blank');
 }
 
 
